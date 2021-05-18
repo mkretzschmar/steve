@@ -1,6 +1,6 @@
 /*
  * SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
- * Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+ * Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
  * All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,9 @@ public class SendLocalListParams extends MultipleChargePointSelect {
 
     @NotNull(message = "Update Type is required")
     private SendLocalListUpdateType updateType = SendLocalListUpdateType.FULL;
+
+    @NotNull
+    private Boolean sendEmptyListWhenFull = Boolean.FALSE;
 
     private List<String> deleteList;
     private List<String> addUpdateList;

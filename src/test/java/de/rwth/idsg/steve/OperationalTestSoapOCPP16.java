@@ -1,6 +1,6 @@
 /*
  * SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
- * Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+ * Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
  * All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -76,6 +76,7 @@ import static de.rwth.idsg.steve.utils.Helpers.getRandomString;
 public class OperationalTestSoapOCPP16 {
 
     private static final String REGISTERED_CHARGE_BOX_ID = __DatabasePreparer__.getRegisteredChargeBoxId();
+    private static final String REGISTERED_CHARGE_BOX_ID_2 = __DatabasePreparer__.getRegisteredChargeBoxId2();
     private static final String REGISTERED_OCPP_TAG = __DatabasePreparer__.getRegisteredOcppTag();
     private static final String path = getPath();
     private static final int numConnectors = 5;
@@ -204,6 +205,59 @@ public class OperationalTestSoapOCPP16 {
 
         Assert.assertNotNull(stop);
         Assert.assertFalse(__DatabasePreparer__.getOcppTagRecord(REGISTERED_OCPP_TAG).getInTransaction());
+    }
+
+    /**
+     * https://github.com/RWTH-i5-IDSG/steve/issues/217
+     * https://github.com/RWTH-i5-IDSG/steve/issues/219
+     */
+    @Test
+    public void testAuthorizationStatus() {
+        CentralSystemService client = getForOcpp16(path);
+
+        {
+            AuthorizeResponse auth1 = client.authorize(
+                    new AuthorizeRequest().withIdTag(REGISTERED_OCPP_TAG),
+                    REGISTERED_CHARGE_BOX_ID);
+            Assert.assertEquals(AuthorizationStatus.ACCEPTED, auth1.getIdTagInfo().getStatus());
+
+            StartTransactionResponse start1 = client.startTransaction(
+                    new StartTransactionRequest()
+                            .withConnectorId(2)
+                            .withIdTag(REGISTERED_OCPP_TAG)
+                            .withTimestamp(DateTime.now())
+                            .withMeterStart(0),
+                    REGISTERED_CHARGE_BOX_ID);
+            Assert.assertTrue(start1.getTransactionId() > 0);
+            Assert.assertEquals(AuthorizationStatus.ACCEPTED, start1.getIdTagInfo().getStatus());
+
+            AuthorizeResponse auth1Retry = client.authorize(
+                    new AuthorizeRequest().withIdTag(REGISTERED_OCPP_TAG),
+                    REGISTERED_CHARGE_BOX_ID);
+            Assert.assertEquals(AuthorizationStatus.ACCEPTED, auth1Retry.getIdTagInfo().getStatus());
+        }
+
+        {
+            AuthorizeResponse auth2 = client.authorize(
+                    new AuthorizeRequest().withIdTag(REGISTERED_OCPP_TAG),
+                    REGISTERED_CHARGE_BOX_ID_2);
+            Assert.assertEquals(AuthorizationStatus.ACCEPTED, auth2.getIdTagInfo().getStatus());
+
+            StartTransactionResponse start2 = client.startTransaction(
+                    new StartTransactionRequest()
+                            .withConnectorId(2)
+                            .withIdTag(REGISTERED_OCPP_TAG)
+                            .withTimestamp(DateTime.now())
+                            .withMeterStart(0),
+                    REGISTERED_CHARGE_BOX_ID_2);
+            Assert.assertTrue(start2.getTransactionId() > 0);
+            Assert.assertEquals(AuthorizationStatus.CONCURRENT_TX, start2.getIdTagInfo().getStatus());
+
+            AuthorizeResponse auth2Retry = client.authorize(
+                    new AuthorizeRequest().withIdTag(REGISTERED_OCPP_TAG),
+                    REGISTERED_CHARGE_BOX_ID_2);
+            Assert.assertEquals(AuthorizationStatus.ACCEPTED, auth2Retry.getIdTagInfo().getStatus());
+        }
     }
 
     @Test

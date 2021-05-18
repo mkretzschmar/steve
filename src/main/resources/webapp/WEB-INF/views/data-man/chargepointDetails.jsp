@@ -1,7 +1,7 @@
 <%--
 
     SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
-    Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+    Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
     All Rights Reserved.
 
     This program is free software: you can redistribute it and/or modify
@@ -89,7 +89,7 @@
                     <tr><td>Charge Point Vendor:</td><td>${cp.chargeBox.chargePointVendor}</td></tr>
                     <tr><td>Charge Point Model:</td><td>${cp.chargeBox.chargePointModel}</td></tr>
                     <tr><td>Charge Point Serial Number:</td><td>${cp.chargeBox.chargePointSerialNumber}</td></tr>
-                    <tr><td>Charge Box Serial Number:</td><td>${cp.chargeBox.chargePointSerialNumber}</td></tr>
+                    <tr><td>Charge Box Serial Number:</td><td>${cp.chargeBox.chargeBoxSerialNumber}</td></tr>
                     <tr><td>Firmware Version:</td><td>${cp.chargeBox.fwVersion}</td></tr>
                     <tr><td>Firmware Update Timestamp:</td><td>${cp.chargeBox.fwUpdateTimestamp}</td></tr>
                     <tr><td>Iccid:</td><td>${cp.chargeBox.iccid}</td></tr>
@@ -109,6 +109,9 @@
                             </a>
                         </td>
                     </tr>
+                    <tr><td>Registration status:</td><td>
+                        <form:select path="registrationStatus" items="${registrationStatusList}"/>
+                    </td></tr>
                 </tbody>
             </table>
 

@@ -1,6 +1,6 @@
 /*
  * SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
- * Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+ * Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
  * All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -124,7 +124,7 @@ public class OcppTagRepositoryImpl implements OcppTagRepository {
     @Override
     public Result<OcppTagActivityRecord> getRecords(List<String> idTagList) {
         return ctx.selectFrom(OCPP_TAG_ACTIVITY)
-                  .where(OCPP_TAG.ID_TAG.in(idTagList))
+                  .where(OCPP_TAG_ACTIVITY.ID_TAG.in(idTagList))
                   .fetch();
     }
 

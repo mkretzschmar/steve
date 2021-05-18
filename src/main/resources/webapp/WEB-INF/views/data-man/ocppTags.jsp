@@ -1,7 +1,7 @@
 <%--
 
     SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
-    Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+    Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
     All Rights Reserved.
 
     This program is free software: you can redistribute it and/or modify
@@ -52,11 +52,11 @@
                     <td>${item.numberOfAttempts}</td>
                     <td data-sort-value="${item.lastAttemptTimestamp.millis}">${item.lastAttemptTimestamp}</td>
                     <td class="inlineWrapper">
-                        <form:form cssClass="inline" action="${ctxPath}/manager/ocppTags/unknown/add/${item.key}" method="post">
+                        <form:form cssClass="inline" action="${ctxPath}/manager/ocppTags/unknown/add/${item.key}/" method="post">
                             <input type="submit" class="blueSubmit" value="Add"/>
                         </form:form>
                         &nbsp;
-                        <form:form cssClass="inline" action="${ctxPath}/manager/ocppTags/unknown/remove/${item.key}" method="post">
+                        <form:form cssClass="inline" action="${ctxPath}/manager/ocppTags/unknown/remove/${item.key}/" method="post">
                             <input type="submit" class="redSubmit" value="Forget"/>
                         </form:form>
                     </td>

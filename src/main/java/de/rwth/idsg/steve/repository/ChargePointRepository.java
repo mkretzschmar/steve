@@ -1,6 +1,6 @@
 /*
  * SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
- * Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+ * Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
  * All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,14 +29,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Sevket Goekay <goekay@dbis.rwth-aachen.de>
  * @since 19.08.2014
  */
 public interface ChargePointRepository {
-    boolean isRegistered(String chargeBoxId);
-    List<ChargePointSelect> getChargePointSelect(OcppProtocol protocol);
+    Optional<String> getRegistrationStatus(String chargeBoxId);
+    List<ChargePointSelect> getChargePointSelect(OcppProtocol protocol, List<String> inStatusFilter);
     List<String> getChargeBoxIds();
     Map<String, Integer> getChargeBoxIdPkPair(List<String> chargeBoxIdList);
 

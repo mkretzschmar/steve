@@ -1,6 +1,6 @@
 /*
  * SteVe - SteckdosenVerwaltung - https://github.com/RWTH-i5-IDSG/steve
- * Copyright (C) 2013-2019 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
+ * Copyright (C) 2013-2021 RWTH Aachen University - Information Systems - Intelligent Distributed Systems Group (IDSG).
  * All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ public class TaskController {
     // -------------------------------------------------------------------------
 
     private static final String TASK_ID_PATH = "/{taskId}";
-    private static final String TASK_DETAILS_PATH = TASK_ID_PATH + "/details/{chargeBoxId}";
+    private static final String TASK_DETAILS_PATH = TASK_ID_PATH + "/details/{chargeBoxId}/";
 
     // -------------------------------------------------------------------------
     // HTTP methods
